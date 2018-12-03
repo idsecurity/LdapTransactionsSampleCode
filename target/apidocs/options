@@ -1,0 +1,24 @@
+-classpath
+'C:/Users/almu/.m2/repository/com/novell/ldap/jldap/2009-10-07/jldap-2009-10-07.jar'
+-encoding
+'UTF-8'
+-protected
+-sourcepath
+'X:/NetBeansProjects/eDirectoryJLdapExt/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2017. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'X:/NetBeansProjects/eDirectoryJLdapExt/target/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'eDirectoryJLdapExt 1.0-SNAPSHOT API'
+-linkoffline
+'http://docs.oracle.com/javase/8/docs/api' 'X:/NetBeansProjects/eDirectoryJLdapExt/target/javadoc-bundle-options'
+-use
+-version
+-windowtitle
+'eDirectoryJLdapExt 1.0-SNAPSHOT API'
