@@ -1,7 +1,7 @@
 /**
  * MIT License
 
-Copyright (c) [2018] [almu]
+Copyright (c) [2019] [almu]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,8 @@ public enum OID {
     CreateGroupingResponse("2.16.840.1.113719.1.27.103.1"),
     EndGroupingRequest("2.16.840.1.113719.1.27.103.2"),
     EndGroupingResponse("2.16.840.1.113719.1.27.103.2"),
-    GroupingControl("2.16.840.1.113719.1.27.103.7");
+    GroupingControl("2.16.840.1.113719.1.27.103.7"),
+    ExtendedDNControl("1.2.840.113556.1.4.529");
 
     private final String oid;
 

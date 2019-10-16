@@ -1,7 +1,7 @@
 /**
  * MIT License
 
-Copyright (c) [2018] [almu]
+Copyright (c) [2019] [almu]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -32,42 +32,41 @@ import java.io.IOException;
 import se.idsecurity.jldap.edirectoryjldapext.common.OID;
 
 /**
- * GroupingControl ( 2.16.840.1.113719.1.27.103.7 ) - This is used to indicate
- * association of an operation to a grouping via the groupCookie which is the
- * value carried by this control.
+ * LDAP_SERVER_EXTENDED_DN_OID  ( 1.2.840.113556.1.4.529 ) - This causes an 
+ * LDAP server to return an extended form of the objects DN: <GUID=guid_value>;dn.
  *
  * @see
- * <a href="https://www.netiq.com/documentation/edirectory-9/edir_admin/data/b4r36pg.html">Documentation</a>
+ * <a href="https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-adts/57056773-932c-4e55-9491-e13f49ba580c">Documentation</a>
  *
  */
-public final class GroupingControl extends LDAPControl {
+public final class ExtendedDnControl extends LDAPControl {
 
     private final LBEREncoder encoder = new LBEREncoder();
 
     private final ByteArrayOutputStream encodedData = new ByteArrayOutputStream();
 
-    private final ASN1Sequence groupingControlValue = new ASN1Sequence();
+    private final ASN1Sequence controlValue = new ASN1Sequence();
 
     /**
-     * Creates a new GroupingControl using the cookie received in a
-     * CreateGroupingResponse in response to CreateGroupingRequest
+     * Creates a new ExtendedDnControl using the specified flag.
      *
-     * @param groupCookie The cookie from the CreateGroupingResponse
+     * @param flag The format of the GUID that will be returned.
      * @param critial True if the LDAP operation should be discarded if the
      * control is not supported. False if the operation can be processed without
      * the control.
      */
-    public GroupingControl(ASN1Integer groupCookie, boolean critial) {
-        super(OID.GroupingControl.getOID(), critial, null);
+    public ExtendedDnControl(GuidFormatFlag flag, boolean critial) {
+        super(OID.ExtendedDNControl.getOID(), critial, null);
 
-        groupingControlValue.add(groupCookie);
+        
+        controlValue.add(new ASN1Integer(flag.getFlag()));
 
         try {
-            groupingControlValue.encode(encoder, encodedData);
+            controlValue.encode(encoder, encodedData);
             setValue(encodedData.toByteArray());
         } catch (IOException e) {
             //Shouldn't occur unless there is a serious failure
-            throw new AssertionError("Unable to create instance of GroupingControl", e);
+            throw new AssertionError("Unable to create instance of ExtendedDnControl", e);
         }
 
     }
@@ -79,6 +78,26 @@ public final class GroupingControl extends LDAPControl {
      */
     public byte[] getEncoded() {
         return encodedData.toByteArray();
+    }
+    
+    /**
+     * How will the LDAP server return the GUID value, 0 = HEX format, 1 = dashed string format.
+     */
+    public enum GuidFormatFlag {
+        
+        HEX(0),
+        STRING(1);
+       
+        private final int flag;
+
+        GuidFormatFlag(int flag) {
+            this.flag = flag;
+        }
+               
+        int getFlag() {
+            return flag;
+        }
+        
     }
 
 }
